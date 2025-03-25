@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <locale.h>
-//#include <windows.h>
+#include <windows.h>
 
 int main(){
 
     //tentei fazer ler o acento mas não consegui
     //SetConsoleOutputCP(CP_UTF8);
-    setlocale(LC_ALL, "Portuguese_Brazil.utf8");
+    //setlocale(LC_ALL, "Portuguese_Brazil.utf8");
    // #ifdef _WIN32
-      //SetConsoleOutputCP(CP_UTF8);
-       //SetConsoleCP(CP_UTF8);
+      // SetConsoleOutputCP(CP_UTF8);
+       SetConsoleCP(CP_UTF8);
    // #endif
 
     char estado1[50];
@@ -31,6 +31,7 @@ int main(){
     unsigned int turistico2;
     float densidade2;
     float percapita2;
+    int menucomparacao;
 
 
 
@@ -43,7 +44,6 @@ printf("\n Digite o Estado a qual pertence a primeira carta: ");
 scanf(" %49[^\n]", estado1);
 
 //printf("Teste com acento %s", estado1);
-//aqui no GitHub funciona. Não consegui ler o acento no Visual Studio pelo Windows
 
 printf("\n Digite o código da primeira carta: ");    
 scanf(" %s", &cartaid1);
@@ -65,6 +65,8 @@ scanf(" %u", &turistico1);
 
 //tive que colocar a divisão após a entrada dos valores, pois se colocado antes, o sistema não faz o cálculo.
 //por segurança, converti o valor INT de popu para float.
+
+
 
 densidade1 = (float)popu1 / area1;
 percapita1= pib1 / (float)popu1;
@@ -109,33 +111,99 @@ percapita2 = pib2 / (float)popu2;
 //printf("A densidade populacional é: %f e o PIB per capta, com base nas informações digitas, é R$%f \n", densidade2, percapita2);;
 //printf(" %f", popu2 / area2);
 
+printf("Agora, você irá escolher um atributo para comparar entre as cartas. Sendo eles: \n");
+printf("1 - População. \n");
+printf("2 - Área. \n");
+printf("3 - PIB. \n");
+printf("4 - Quantidade de pontos turísticos. \n");
+printf("5 - Densidade demográfica. \n");
+printf("Digite o número correspondente ao atributo a ser comparado e tecle ENTER. \n");
+scanf("%d",&menucomparacao);
+switch (menucomparacao)
+{
+    case 1:
+    printf("O atributo escolhido foi: População.\n");
+    printf("A população da carta da cidade de %s é de %d.\n",cidade1,popu1);
+    printf("A população da carta da cidade de %s é de %d.\n",cidade2,popu2);
+        if(popu1>popu2) {
+            printf("A carta em nome da cidade de %s é a vencedora!\n",cidade1);
+        } else if (popu2>popu1) {
+            printf("A carta em nome da cidade de %s é a vencedora!\n",cidade2);
+        }   else {
+            printf("As cidades possuem o mesmo número de habitantes. Empate!\n");
+        }
+    break;
+    case 2:
+    printf("O atributo escolhido foi: Área.\n");
+    printf("A área da carta da cidade de %s é de  %f.\n",cidade1,area1);
+    printf("A área da carta da cidade de %s é de  %f.\n",cidade2,area2);
+        if(area1>area2) {
+            printf("A carta em nome da cidade de %s é a vencedora!\n",cidade1);
+        } else if (area2>area1) {
+            printf("A carta em nome da cidade de %s é a vencedora!\n",cidade2);
+        }   else {
+            printf("As cidades possuem a mesma área. Empate!\n");
+        }
+    break;
+    case 3:
+    printf("O atributo escolhido foi: PIB.\n");
+    printf("O PIB da carta da cidade de %s é de  %f.\n",cidade1,pib1);
+    printf("O PIB da carta da cidade de %s é de %f.\n",cidade2,pib2);
+        if(pib1>pib2) {
+            printf("A carta em nome da cidade de %s é a vencedora!\n",cidade1);
+        } else if (pib2>pib1) {
+            printf("A carta em nome da cidade de %s é a vencedora!\n",cidade2);
+        }   else {
+            printf("As cidades possuem o mesmo PIB. Empate!\n");
+        }    
+    break;
+    case 4:
+    printf("O atributo escolhido foi: Pontos turísticos.\n");
+    printf("A quantidade de pontos turísticos da carta da cidade de %s é de %d.\n",cidade1,turistico1);
+    printf("A quantidade de pontos turísticos da carta da cidade de %s é de %d.\n",cidade2,turistico2);
+        if(turistico1>turistico2) {
+            printf("A carta em nome da cidade de %s é a vencedora!\n",cidade1);
+        } else if (turistico2>turistico1) {
+            printf("A carta em nome da cidade de %s é a vencedora!\n",cidade2);
+        }   else {
+            printf("As cidades possuem a mesma quantidade de pontos turísticos. Empate!\n");
+        }    
+    break;
+    case 5:
+    printf("O atributo escolhido foi: Densidade demográfica.\n");
+    printf("A Densidade demográfica da carta da cidade de %s é de %f.\n",cidade1,densidade1);
+    printf("A Densidade demográfica da carta da cidade de %s é de %f.\n",cidade2,densidade2);
+        if(densidade1>densidade2) {
+            printf("A carta em nome da cidade de %s é a vencedora!\n",cidade2);
+        } else if (densidade2>densidade1) {
+            printf("A carta em nome da cidade de %s é a vencedora!\n",cidade1);
+        }   else {
+            printf("As cidades possuem a mesma quantidade de pontos turísticos. Empate!\n");
+        }    
+    break;
+default:
+    printf("Opção inválida, tente novamente.\n");
+    break;
+}
 
 //aqui, escolherei o atributo PIB per capita como vencedor
 
-if (percapita1>percapita2)
-{
-    printf("Foi comparado o status de PIB per capita. \n");
-    printf("Cidade: %s, PIB per capita: R$%f X Cidade: %s, PIB per capita: R$%f. \n", cidade1, percapita1, cidade2, percapita2);
-    printf("A Carta vencedora é a %s, que representa a cidade %s, do Estado %s. \n", cartaid1, cidade1, estado1);
+// if (percapita1>percapita2)
+// {
+//     printf("Foi comparado o status de PIB per capita. \n");
+//     printf("Cidade: %s, PIB per capita: R$%f X Cidade: %s, PIB per capita: R$%f. \n", cidade1, percapita1, cidade2, percapita2);
+//     printf("A Carta vencedora é a %s, que representa a cidade %s, do Estado %s. \n", cartaid1, cidade1, estado1);
 
     
-}
-else
-{
-    printf("Foi comparado o status de PIB per capita. \n");
-    printf("Cidade: %s, PIB per capita: R$%f X Cidade: %s, PIB per capita: R$%f. \n", cidade1, percapita1, cidade2, percapita2);
-    printf("A Carta vencedora é a %s, que representa a cidade %s, do Estado %s. \n", cartaid2, cidade2, estado2);
-}
+// }
+// else
+// {
+//     printf("Foi comparado o status de PIB per capita. \n");
+//     printf("Cidade: %s, PIB per capita: R$%f X Cidade: %s, PIB per capita: R$%f. \n", cidade1, percapita1, cidade2, percapita2);
+//     printf("A Carta vencedora é a %s, que representa a cidade %s, do Estado %s. \n", cartaid2, cidade2, estado2);
+// }
 printf("Fim de jogo!");
 
 return 0;
-
-
-
-
-
-
-
-
 
 }
